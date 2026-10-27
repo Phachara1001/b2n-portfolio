@@ -158,21 +158,24 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 <style scoped>
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
-  background: rgba(5, 8, 19, 0.78);
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(5, 8, 19, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.7rem 0;
+  padding: 0.75rem 0;
   transition: all 0.3s var(--ease-out);
 }
 
 .navbar.scrolled {
-  background: rgba(5, 8, 19, 0.94);
-  border-bottom-color: rgba(0, 240, 255, 0.22);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+  background: rgba(5, 8, 19, 0.96);
+  border-bottom-color: rgba(0, 240, 255, 0.28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 240, 255, 0.1);
   padding: 0.55rem 0;
 }
 

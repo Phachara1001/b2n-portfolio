@@ -395,6 +395,12 @@ function scrollTo(id) {
   min-height: 100vh;
 }
 
+.public-view {
+  display: flex;
+  flex-direction: column;
+  padding-top: 72px;
+}
+
 /* Portfolio Section */
 .portfolio-section {
   padding: 5rem 1.5rem 4rem;
