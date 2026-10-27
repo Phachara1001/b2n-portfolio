@@ -10,6 +10,7 @@ import {
 const teamMembers = [
   {
     name: 'Phachara Piasai',
+    nickname: 'Boss',
     position: 'DEV',
     role: 'Fullstack / UX&UI',
     image: '/img/Phachara.png',
@@ -19,17 +20,19 @@ const teamMembers = [
     skills: ['Fullstack Web', 'UI/UX Design', 'Vue 3', 'Supabase', 'Tailwind CSS']
   },
   {
-    name: 'Prachwit Tlemmungpan ( Not )',
+    name: 'Prachwit Tlemmungpan',
+    nickname: 'Not',
     position: 'Account Executive',
     role: 'Project Manager & Client Relations',
     image: '/img/prachwit.png',
     theme: 'gold',
     badge: 'Account Executive',
     description: 'บริหารจัดการโครงการ ประสานงานความต้องการทางธุรกิจของลูกค้า วางแผนงบประมาณ และดูแลการส่งมอบงานให้ตรงเวลาตามเป้าหมาย ติดต่อได้โดยตรงทาง Facebook',
-    skills: ['Client Relations', 'Project Planning', 'Requirements Analysis', 'Budgeting', 'Quality Assurance'],
+    skills: ['Client Relations', 'Project Planning', 'Requirements Analysis', 'Budgeting', 'Quality Assurance']
   },
   {
     name: 'Thatchanon Rodwong',
+    nickname: 'Beam',
     position: 'DEV',
     role: 'Fullstack / Backend',
     image: '/img/thatchanon.png',
@@ -62,11 +65,17 @@ const teamMembers = [
       <div class="team-grid">
         <div v-for="(member, index) in teamMembers" :key="index" class="team-card glass-card"
           :class="`theme-${member.theme}`">
-          <!-- Full Character Portrait Showcase (No Circles, Bold & Prominent!) -->
+          <!-- Full Character Portrait Showcase -->
           <div class="portrait-stage">
             <!-- Cyber Glow Aura Background -->
             <div class="stage-aura" :class="member.theme"></div>
             <div class="stage-grid"></div>
+
+            <!-- Nickname Badge (Top Left) -->
+            <div class="member-nickname-badge font-tech">
+              <span class="nickname-dot"></span>
+              <span class="nickname-val">{{ member.nickname }}</span>
+            </div>
 
             <!-- Person Portrait Image -->
             <img :src="member.image" :alt="member.name" class="portrait-img" />
@@ -74,7 +83,7 @@ const teamMembers = [
             <!-- Bottom Gradient Fade -->
             <div class="portrait-fade"></div>
 
-            <!-- Badge floating at top right -->
+            <!-- Role Badge floating at top right -->
             <span class="member-squad-badge font-tech">
               {{ member.badge }}
             </span>
@@ -82,7 +91,10 @@ const teamMembers = [
 
           <!-- Info Body -->
           <div class="member-info">
-            <h3 class="member-name font-tech">{{ member.name }}</h3>
+            <div class="member-name-row">
+              <h3 class="member-name font-tech">{{ member.name }}</h3>
+              <span class="member-callsign font-tech">( {{ member.nickname }} )</span>
+            </div>
 
             <div class="member-position-pill">
               <span class="position-badge font-tech">{{ member.position }}</span>
@@ -97,7 +109,6 @@ const teamMembers = [
                 {{ skill }}
               </span>
             </div>
-
           </div>
         </div>
       </div>
@@ -286,6 +297,84 @@ const teamMembers = [
   pointer-events: none;
 }
 
+/* Nickname Badge (Top Left of portrait) */
+.member-nickname-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 4;
+  background: rgba(6, 10, 22, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 0.28rem 0.8rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  border: 1px solid transparent;
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.team-card:hover .member-nickname-badge {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.nickname-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.nickname-title {
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.5px;
+}
+
+.nickname-val {
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+/* Theme variations for Nickname Badge */
+.theme-cyan .member-nickname-badge {
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+  color: #00f0ff;
+}
+
+.theme-cyan .nickname-dot {
+  background: #00f0ff;
+  box-shadow: 0 0 6px #00f0ff;
+}
+
+.theme-gold .member-nickname-badge {
+  border-color: rgba(255, 183, 3, 0.5);
+  box-shadow: 0 0 16px rgba(255, 183, 3, 0.3);
+  color: #ffb703;
+}
+
+.theme-gold .nickname-dot {
+  background: #ffb703;
+  box-shadow: 0 0 6px #ffb703;
+}
+
+.theme-red .member-nickname-badge {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.theme-red .nickname-dot {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+}
+
 /* Badge at top right */
 .member-squad-badge {
   position: absolute;
@@ -327,6 +416,33 @@ const teamMembers = [
   flex-grow: 1;
   width: 100%;
   padding: 0 0.5rem;
+}
+
+.member-name-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.member-callsign {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.theme-cyan .member-callsign {
+  color: #00f0ff;
+}
+
+.theme-gold .member-callsign {
+  color: #ffb703;
+}
+
+.theme-red .member-callsign {
+  color: #f87171;
 }
 
 .member-name {
